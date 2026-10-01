@@ -8,3 +8,8 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Project architecture
+
+- Keep the marketing experience as one anchor-navigated homepage because its sections form one continuous brand narrative.
+- Keep brand colors, typography, motion, and graphic motifs centralized in `src/styles.css` so all page sections share one visual language.

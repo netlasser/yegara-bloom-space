@@ -19,6 +19,8 @@
  */
 
 @theme inline {
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -59,29 +61,41 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-ink: var(--ink);
+  --color-cream: var(--cream);
+  --color-orange: var(--orange);
+  --color-orange-soft: var(--orange-soft);
+  --color-stone: var(--stone);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --radius: 0.25rem;
+  --font-heading: "Arial Narrow", "Helvetica Neue", sans-serif;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --ink: oklch(0.18 0.035 257);
+  --cream: oklch(0.965 0.018 83);
+  --orange: oklch(0.68 0.21 39);
+  --orange-soft: oklch(0.79 0.15 53);
+  --stone: oklch(0.72 0.025 77);
+  --background: var(--cream);
+  --foreground: var(--ink);
+  --card: var(--cream);
+  --card-foreground: var(--ink);
+  --popover: var(--cream);
+  --popover-foreground: var(--ink);
+  --primary: var(--orange);
+  --primary-foreground: var(--ink);
+  --secondary: var(--ink);
+  --secondary-foreground: var(--cream);
+  --muted: oklch(0.91 0.02 80);
+  --muted-foreground: oklch(0.42 0.025 257);
+  --accent: var(--orange);
+  --accent-foreground: var(--ink);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(0.75 0.025 77);
+  --input: oklch(0.75 0.025 77);
+  --ring: var(--orange);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +154,43 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-body);
+    margin: 0;
+    overflow-x: hidden;
+    letter-spacing: 0;
+    text-rendering: optimizeLegibility;
   }
+
+  ::selection { background: var(--orange); color: var(--ink); }
+  :focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; }
+  h1, h2, h3 { font-family: var(--font-heading); font-stretch: condensed; letter-spacing: 0; }
+}
+
+@utility section-shell {
+  margin-inline: auto;
+  width: min(100% - 2rem, 86rem);
+}
+
+@utility display-title {
+  font-family: var(--font-heading);
+  font-size: clamp(3.5rem, 9vw, 8.5rem);
+  font-weight: 700;
+  line-height: 0.84;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+@utility eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+@keyframes yegara-reveal { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes yegara-turn { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { animation: yegara-reveal 0.75s both; animation-timeline: view(); animation-range: entry 10% cover 28%; }
+  .sun-turn { animation: yegara-turn 30s linear infinite; }
 }
