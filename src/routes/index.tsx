@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowDownRight, ArrowUpRight, Coffee, Menu, Sparkles, Users, Wifi, X } from "lucide-react";
 import { useState } from "react";
 
-import heroVideo from "@/assets/yegara-hero.mp4.asset.json";
+import { Hero } from "@/components/Hero";
 import desksAsset from "@/assets/yegara-desks.jpg.asset.json";
 import officeOneAsset from "@/assets/yegara-office-one.jpg.asset.json";
 import officeExecAsset from "@/assets/yegara-office-exec.jpg.asset.json";
@@ -10,6 +10,15 @@ import boardroomAsset from "@/assets/yegara-boardroom.jpg.asset.json";
 import loungeAsset from "@/assets/yegara-lounge.jpg.asset.json";
 import cafeAsset from "@/assets/yegara-cafe.jpg.asset.json";
 import { Button } from "@/components/ui/button";
+
+/**
+ * Helper to resolve asset URLs from the project's metadata files.
+ */
+function resolveAsset(asset: any): string {
+  if (!asset) return "";
+  if (typeof asset === 'string') return asset;
+  return asset.url || "";
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -29,20 +38,35 @@ const navItems = [
   ["Spaces", "#spaces"], ["Amenities", "#amenities"], ["Community", "#community"], ["About", "#about"],
 ] as const;
 
-const desks = desksAsset.url, officeOne = officeOneAsset.url, officeExec = officeExecAsset.url;
-const boardroom = boardroomAsset.url, lounge = loungeAsset.url, cafe = cafeAsset.url;
+const desks = resolveAsset(desksAsset);
+const officeOne = resolveAsset(officeOneAsset);
+const officeExec = resolveAsset(officeExecAsset);
+const boardroom = resolveAsset(boardroomAsset);
+const lounge = resolveAsset(loungeAsset);
+const cafe = resolveAsset(cafeAsset);
 
 const moreSpaces = [
-  { n: "03", title: "Cubicles", note: "Quiet corners, real productivity.", image: desks, pos: "object-[20%_60%]" },
-  { n: "04", title: "Hot Desks", note: "Drop in, plug in, get it done.", image: lounge, pos: "object-[60%_70%]" },
-  { n: "05", title: "Phone Booths", note: "For the calls that need privacy.", image: null, pos: "" },
-  { n: "06", title: "Meeting Rooms", note: "Where ideas get sharper.", image: null, pos: "" },
+  { n: "03", title: "Cubicles", note: "Considered workstations for deep work.", image: desks, pos: "object-[20%_60%]" },
+  { n: "04", title: "Hot Desks", note: "Flexible seating in a vibrant environment.", image: lounge, pos: "object-[60%_70%]" },
+  { n: "05", title: "Phone Booths", note: "Acoustic privacy for your important calls.", image: officeOne, pos: "object-center" },
+  { n: "06", title: "Meeting Rooms", note: "Professional settings for team collaboration.", image: officeExec, pos: "object-[50%_40%]" },
 ] as const;
 
 function Photo({ src, alt, className = "", pos = "object-center" }: { src: string; alt: string; className?: string; pos?: string }) {
-  return <div className={`group overflow-hidden bg-ink ${className}`}>
-    <img src={src} alt={alt} width={778} height={400} loading="lazy" decoding="async" className={`h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.04] ${pos}`} />
-  </div>;
+  if (!src) return <div className={`bg-ink/10 ${className}`} />;
+  return (
+    <div className={`group overflow-hidden bg-ink ${className}`}>
+      <img 
+        src={src} 
+        alt={alt} 
+        width={1200} 
+        height={800} 
+        loading="lazy" 
+        decoding="async" 
+        className={`h-full w-full object-cover transition duration-1000 ease-out group-hover:scale-[1.05] ${pos}`} 
+      />
+    </div>
+  );
 }
 
 function SunMark({ className = "" }: { className?: string }) {
@@ -97,27 +121,10 @@ function SectionIntro({ number, label, title }: { number: string; label: string;
 }
 
 function HomePage() {
-  return <main id="top" className="bg-background text-foreground">
+  return (
+    <main id="top" className="bg-background text-foreground">
     <Header />
-    <section className="relative min-h-[100svh] overflow-hidden bg-ink text-cream">
-      <video className="absolute inset-0 h-full w-full object-cover" src={heroVideo.url} poster={lounge} autoPlay muted loop playsInline preload="auto" aria-hidden="true" />
-      <div className="absolute inset-0 bg-ink/55" />
-      <div className="section-shell relative flex min-h-[100svh] flex-col justify-end pb-10 pt-32">
-        <div className="mb-7 flex items-center justify-between border-b border-cream/40 pb-4">
-          <p className="eyebrow">Premium coworking · Kazanchis, Addis Ababa</p>
-          <ArrowDownRight className="h-6 w-6 text-orange" />
-        </div>
-        <h1 className="display-title max-w-6xl">One space.<br/><span className="text-orange">Many possibilities.</span></h1>
-        <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <p className="max-w-md text-base leading-relaxed text-cream/85 md:text-lg">From your first solo sprint to your next big boardroom decision — Yegara Space moves with you.</p>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button asChild variant="yegara" size="lg" className="h-12 px-7 font-bold uppercase"><a href="#visit">Book a visit <ArrowUpRight /></a></Button>
-            <Button asChild variant="yegara-light" size="lg" className="h-12 px-7 font-bold uppercase"><a href="#spaces">Explore spaces <ArrowDownRight /></a></Button>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <Hero />
     <section id="about" className="relative overflow-hidden bg-orange py-24 md:py-36">
       <div className="section-shell relative z-10">
         <p className="eyebrow mb-14">Yegara means ours</p>
@@ -128,25 +135,31 @@ function HomePage() {
 
     <section id="spaces" className="bg-cream py-24 md:py-36">
       <div className="section-shell">
-        <SectionIntro number="01" label="Spaces" title={<>Find your <span className="text-orange">space.</span></>} />
+        <SectionIntro number="01" label="Spaces" title={<>FIND YOUR <span className="text-orange">SPACE.</span></>} />
         <p className="reveal mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground md:ml-[25%]">From focused solo work to boardroom decisions, there is a space for the way you work.</p>
 
         <div className="mt-16 grid gap-14 md:grid-cols-12 md:gap-8">
           <article className="md:col-span-7">
             <div className="relative">
-              <Photo src={officeOne} alt="1-person private office with wood cabinetry at Yegara Space" className="aspect-[4/3]" pos="object-[50%_60%]" />
-              <Photo src={officeExec} alt="Executive office with yellow lounge chairs at Yegara Space" className="absolute -bottom-10 right-4 hidden aspect-[4/3] w-[38%] border-4 border-cream md:block" />
+              <Photo src={officeOne} alt="1-person private office with individual desk and wood cabinetry at Yegara Space" className="aspect-[4/3]" pos="object-[50%_60%]" />
+              <Photo src={officeExec} alt="Executive private office with desk and yellow lounge chairs at Yegara Space" className="absolute -bottom-10 right-4 hidden aspect-[4/3] w-[38%] border-4 border-cream md:block shadow-xl" />
             </div>
             <div className="mt-6 flex items-start gap-5 border-t border-ink/25 pt-5 md:mt-16 md:pr-[42%]">
               <span className="eyebrow text-orange">01</span>
-              <div><h3 className="text-3xl font-bold uppercase md:text-5xl">Private Offices</h3><p className="mt-2 text-muted-foreground">Executive &amp; 1-Person, for focus that means business.</p></div>
+              <div>
+                <h3 className="text-3xl font-bold uppercase md:text-5xl">Private Offices</h3>
+                <p className="mt-2 text-muted-foreground">Executive &amp; 1-Person, for focus that means business.</p>
+              </div>
             </div>
           </article>
           <article className="md:col-span-5 md:pt-32">
-            <Photo src={desks} alt="Open workspace with rows of dedicated desks at Yegara Space" className="aspect-[4/5]" pos="object-[45%_50%]" />
+            <Photo src={desks} alt="Open workspace with rows of dedicated desks and workstations at Yegara Space" className="aspect-[4/5]" pos="object-[45%_50%]" />
             <div className="mt-6 flex items-start gap-5 border-t border-ink/25 pt-5">
               <span className="eyebrow text-orange">02</span>
-              <div><h3 className="text-3xl font-bold uppercase md:text-5xl">Dedicated Desks</h3><p className="mt-2 text-muted-foreground">Your seat, every day.</p></div>
+              <div>
+                <h3 className="text-3xl font-bold uppercase md:text-5xl">Dedicated Desks</h3>
+                <p className="mt-2 text-muted-foreground">Your seat, every day.</p>
+              </div>
             </div>
           </article>
         </div>
@@ -177,11 +190,17 @@ function HomePage() {
       <div className="section-shell">
         <SectionIntro number="02" label="Community" title={<>Work. Connect. <span className="text-orange">Create.</span></>} />
         <div className="mt-16 grid items-start gap-10 md:grid-cols-12">
-          <div className="group overflow-hidden md:col-span-8"><img src={lounge} alt="Yegara Space shared lounge with orange walls and an indoor tree" width={778} height={458} loading="lazy" className="aspect-[4/3] h-full w-full object-cover object-[45%_60%] transition duration-700 group-hover:scale-[1.025]" /></div>
+          <div className="group overflow-hidden md:col-span-8">
+            <Photo src={lounge} alt="Yegara Space shared lounge with warm lighting and comfortable seating" className="aspect-[4/3]" pos="object-[45%_60%]" />
+          </div>
           <div className="reveal md:col-span-4 md:pt-20">
             <SunMark className="mb-10 h-20 w-20 text-orange" />
-            <p className="text-2xl leading-snug">Yegara isn’t just a place to rent a desk. It’s a professional home where people meet, collaborate and build together.</p>
-            <p className="mt-8 border-t border-cream/25 pt-6 text-sm leading-relaxed text-cream/65">From a quick exchange in the lounge to a new partnership over coffee, the right connections happen naturally here.</p>
+            <p className="text-2xl leading-snug">
+              Yegara isn’t just a place to rent a desk. It’s a professional environment for collaboration, networking and productive work.
+            </p>
+            <p className="mt-8 border-t border-cream/25 pt-6 text-sm leading-relaxed text-cream/65">
+              From a quick exchange in the lounge to a new partnership over coffee, the right connections happen naturally here.
+            </p>
           </div>
         </div>
       </div>
@@ -207,23 +226,75 @@ function HomePage() {
 
     <section className="bg-cream py-24 md:py-36">
       <div className="section-shell grid items-center gap-12 md:grid-cols-2">
-        <div className="reveal md:pr-10"><p className="eyebrow mb-8"><span className="text-orange">08</span> · In-house Café</p><h2 className="text-5xl font-bold uppercase leading-[0.9] md:text-7xl">Great work runs on <span className="text-orange">great coffee.</span></h2><p className="mt-8 max-w-md text-lg leading-relaxed text-muted-foreground">In-house Café — because great work runs on great coffee.</p>
-          <Photo src={lounge} alt="Café seating with orange and yellow chairs" className="mt-10 hidden aspect-[16/10] w-2/3 md:block" pos="object-[70%_80%]" /></div>
-        <div className="relative"><Photo src={cafe} alt="Yegara Space in-house café bar with wooden stools" className="aspect-[4/5]" pos="object-[45%_60%]" /><SunMark className="pointer-events-none absolute right-5 top-5 h-20 w-20 text-orange" /></div>
+        <div className="reveal md:pr-10">
+          <p className="eyebrow mb-8"><span className="text-orange">08</span> · In-house Café</p>
+          <h2 className="text-5xl font-bold uppercase leading-[0.9] md:text-7xl">
+            Great work runs on <span className="text-orange">great coffee.</span>
+          </h2>
+          <p className="mt-8 max-w-md text-lg leading-relaxed text-muted-foreground">
+            In-house Café — because great work runs on great coffee.
+          </p>
+          <Photo src={lounge} alt="Café seating area with comfortable lounge furniture at Yegara Space" className="mt-10 hidden aspect-[16/10] w-2/3 md:block" pos="object-[70%_80%]" />
+        </div>
+        <div className="relative">
+          <Photo src={cafe} alt="Yegara Space in-house café bar with wooden stools and premium setup" className="aspect-[4/5]" pos="object-[45%_60%]" />
+          <SunMark className="pointer-events-none absolute right-5 top-5 h-20 w-20 text-orange" />
+        </div>
       </div>
     </section>
 
     <section id="visit" className="relative overflow-hidden bg-ink py-24 text-cream md:py-36">
       <div className="section-shell grid gap-14 md:grid-cols-[2fr_1fr] md:items-end">
-        <div><p className="eyebrow mb-10 text-orange">Come see it for yourself</p><h2 className="display-title">Your next<br/><span className="text-orange">workday</span><br/>starts here.</h2></div>
+        <div>
+          <p className="eyebrow mb-10 text-orange">Come see it for yourself</p>
+          <h2 className="display-title">YOUR NEXT<br /><span className="text-orange">WORKDAY</span><br />STARTS HERE.</h2>
+        </div>
         <div className="border-l border-cream/25 pl-6 md:pl-10">
-          <p className="eyebrow text-cream/50">Find us</p><address className="mt-5 text-2xl font-bold not-italic leading-snug">Yegara Space<br/>Bloom Tower, 3rd Floor<br/>Kazanchis<br/>Addis Ababa, Ethiopia</address>
-          <Button asChild variant="yegara" size="lg" className="mt-8 h-12 w-full font-bold uppercase"><a href="https://www.instagram.com/yegaraspace.et/" target="_blank" rel="noreferrer">Book a visit <ArrowUpRight /></a></Button>
+          <p className="eyebrow text-cream/50">Find us</p>
+          <address className="mt-5 text-2xl font-bold not-italic leading-snug">
+            Yegara Space<br />
+            Bloom Tower, 3rd Floor<br />
+            Kazanchis<br />
+            Addis Ababa, Ethiopia
+          </address>
+          <Button asChild variant="yegara" size="lg" className="mt-8 h-12 w-full font-bold uppercase">
+            <a href="https://www.instagram.com/yegaraspace.et/" target="_blank" rel="noreferrer">Book a visit <ArrowUpRight /></a>
+          </Button>
         </div>
       </div>
       <SunMark className="absolute -bottom-40 -right-40 h-[34rem] w-[34rem] text-cream/5" />
     </section>
 
-    <footer className="bg-ink pb-10 text-cream"><div className="section-shell border-t border-cream/20 pt-10"><div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between"><div><Logo light/><p className="mt-5 max-w-xs text-sm text-cream/55">One space, many possibilities.<br/>Made in Addis Ababa.</p></div><div className="flex flex-col gap-3 text-sm md:text-right"><a className="hover:text-orange" href="https://www.instagram.com/yegaraspace.et/" target="_blank" rel="noreferrer">Instagram @yegaraspace.et</a><a className="hover:text-orange" href="#top">Back to top ↑</a></div></div><p className="mt-16 text-[0.65rem] uppercase tracking-[0.16em] text-cream/35">© 2026 Yegara Space. All rights reserved.</p></div></footer>
-  </main>;
+      <footer className="bg-ink pb-10 text-cream">
+        <div className="section-shell border-t border-cream/20 pt-10">
+          <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+            <div>
+              <Logo light />
+              <p className="mt-5 max-w-xs text-sm text-cream/55">
+                One space, many possibilities.
+                <br />
+                Made in Addis Ababa.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 text-sm md:text-right">
+              <a
+                className="hover:text-orange"
+                href="https://www.instagram.com/yegaraspace.et/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Instagram @yegaraspace.et
+              </a>
+              <a className="hover:text-orange" href="#top">
+                Back to top ↑
+              </a>
+            </div>
+          </div>
+          <p className="mt-16 text-[0.65rem] uppercase tracking-[0.16em] text-cream/35">
+            © 2026 Yegara Space. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </main>
+  );
 }
