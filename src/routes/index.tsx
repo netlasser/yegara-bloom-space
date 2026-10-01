@@ -2,10 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowDownRight, ArrowUpRight, Coffee, Menu, Sparkles, Users, Wifi, X } from "lucide-react";
 import { useState } from "react";
 
-import heroImage from "@/assets/yegara-hero.jpg";
-import officeImage from "@/assets/yegara-private-office.jpg";
-import communityImage from "@/assets/yegara-community.jpg";
-import cafeImage from "@/assets/yegara-cafe.jpg";
+import heroVideo from "@/assets/yegara-hero.mp4.asset.json";
+import desksAsset from "@/assets/yegara-desks.jpg.asset.json";
+import officeOneAsset from "@/assets/yegara-office-one.jpg.asset.json";
+import officeExecAsset from "@/assets/yegara-office-exec.jpg.asset.json";
+import boardroomAsset from "@/assets/yegara-boardroom.jpg.asset.json";
+import loungeAsset from "@/assets/yegara-lounge.jpg.asset.json";
+import cafeAsset from "@/assets/yegara-cafe.jpg.asset.json";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -26,12 +29,21 @@ const navItems = [
   ["Spaces", "#spaces"], ["Amenities", "#amenities"], ["Community", "#community"], ["About", "#about"],
 ] as const;
 
-const spaces = [
-  { title: "Private Offices", note: "A space of your own", image: officeImage, pos: "object-center" },
-  { title: "Dedicated Desks", note: "Your desk, every day", image: heroImage, pos: "object-left" },
-  { title: "Hot Desks", note: "Drop in. Get going.", image: communityImage, pos: "object-center" },
-  { title: "Meeting Rooms", note: "Meet with intention", image: heroImage, pos: "object-right" },
+const desks = desksAsset.url, officeOne = officeOneAsset.url, officeExec = officeExecAsset.url;
+const boardroom = boardroomAsset.url, lounge = loungeAsset.url, cafe = cafeAsset.url;
+
+const moreSpaces = [
+  { n: "03", title: "Cubicles", note: "Quiet corners, real productivity.", image: desks, pos: "object-[20%_60%]" },
+  { n: "04", title: "Hot Desks", note: "Drop in, plug in, get it done.", image: lounge, pos: "object-[60%_70%]" },
+  { n: "05", title: "Phone Booths", note: "For the calls that need privacy.", image: null, pos: "" },
+  { n: "06", title: "Meeting Rooms", note: "Where ideas get sharper.", image: null, pos: "" },
 ] as const;
+
+function Photo({ src, alt, className = "", pos = "object-center" }: { src: string; alt: string; className?: string; pos?: string }) {
+  return <div className={`group overflow-hidden bg-ink ${className}`}>
+    <img src={src} alt={alt} width={778} height={400} loading="lazy" decoding="async" className={`h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.04] ${pos}`} />
+  </div>;
+}
 
 function SunMark({ className = "" }: { className?: string }) {
   return (
@@ -87,18 +99,21 @@ function SectionIntro({ number, label, title }: { number: string; label: string;
 function HomePage() {
   return <main id="top" className="bg-background text-foreground">
     <Header />
-    <section className="relative min-h-[92svh] overflow-hidden bg-ink text-cream">
-      <img src={heroImage} alt="Yegara's shared workspace overlooking Addis Ababa" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover opacity-70" />
-      <div className="absolute inset-0 bg-ink/45" />
-      <div className="section-shell relative flex min-h-[92svh] flex-col justify-end pb-10 pt-32">
+    <section className="relative min-h-[100svh] overflow-hidden bg-ink text-cream">
+      <video className="absolute inset-0 h-full w-full object-cover" src={heroVideo.url} poster={lounge} autoPlay muted loop playsInline preload="auto" aria-hidden="true" />
+      <div className="absolute inset-0 bg-ink/55" />
+      <div className="section-shell relative flex min-h-[100svh] flex-col justify-end pb-10 pt-32">
         <div className="mb-7 flex items-center justify-between border-b border-cream/40 pb-4">
-          <p className="eyebrow">Premium coworking · Addis Ababa</p>
+          <p className="eyebrow">Premium coworking · Kazanchis, Addis Ababa</p>
           <ArrowDownRight className="h-6 w-6 text-orange" />
         </div>
         <h1 className="display-title max-w-6xl">One space.<br/><span className="text-orange">Many possibilities.</span></h1>
-        <div className="mt-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-          <p className="max-w-md text-base leading-relaxed text-cream/80">A considered place to focus, collaborate and grow—made for Addis Ababa's professionals, entrepreneurs and teams.</p>
-          <Button asChild variant="yegara-light" size="lg" className="h-12 px-7 font-bold uppercase"><a href="#spaces">Explore the space <ArrowDownRight /></a></Button>
+        <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <p className="max-w-md text-base leading-relaxed text-cream/85 md:text-lg">From your first solo sprint to your next big boardroom decision — Yegara Space moves with you.</p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button asChild variant="yegara" size="lg" className="h-12 px-7 font-bold uppercase"><a href="#visit">Book a visit <ArrowUpRight /></a></Button>
+            <Button asChild variant="yegara-light" size="lg" className="h-12 px-7 font-bold uppercase"><a href="#spaces">Explore spaces <ArrowDownRight /></a></Button>
+          </div>
         </div>
       </div>
     </section>
@@ -114,15 +129,47 @@ function HomePage() {
     <section id="spaces" className="bg-cream py-24 md:py-36">
       <div className="section-shell">
         <SectionIntro number="01" label="Spaces" title={<>Find your <span className="text-orange">space.</span></>} />
-        <div className="mt-14 grid gap-px bg-ink md:grid-cols-2">
-          {spaces.map((space, index) => <article key={space.title} className="group relative aspect-[5/4] overflow-hidden bg-ink">
-            <img src={space.image} alt={`${space.title} at Yegara Space`} width={index === 0 ? 1200 : 1400} height={index === 0 ? 1504 : 1104} loading="lazy" className={`h-full w-full object-cover opacity-80 transition duration-700 group-hover:scale-[1.04] group-hover:opacity-95 ${space.pos}`} />
-            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-ink/82 p-6 text-cream md:p-9">
-              <div><p className="eyebrow mb-2 text-orange">0{index + 1}</p><h3 className="text-3xl font-bold uppercase md:text-5xl">{space.title}</h3><p className="mt-2 text-sm text-cream/70">{space.note}</p></div>
-              <span className="grid h-11 w-11 place-items-center border border-cream/50 text-orange transition group-hover:bg-orange group-hover:text-ink"><ArrowUpRight /></span>
+        <p className="reveal mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground md:ml-[25%]">From focused solo work to boardroom decisions, there is a space for the way you work.</p>
+
+        <div className="mt-16 grid gap-14 md:grid-cols-12 md:gap-8">
+          <article className="md:col-span-7">
+            <div className="relative">
+              <Photo src={officeOne} alt="1-person private office with wood cabinetry at Yegara Space" className="aspect-[4/3]" pos="object-[50%_60%]" />
+              <Photo src={officeExec} alt="Executive office with yellow lounge chairs at Yegara Space" className="absolute -bottom-10 right-4 hidden aspect-[4/3] w-[38%] border-4 border-cream md:block" />
             </div>
+            <div className="mt-6 flex items-start gap-5 border-t border-ink/25 pt-5 md:mt-16 md:pr-[42%]">
+              <span className="eyebrow text-orange">01</span>
+              <div><h3 className="text-3xl font-bold uppercase md:text-5xl">Private Offices</h3><p className="mt-2 text-muted-foreground">Executive &amp; 1-Person, for focus that means business.</p></div>
+            </div>
+          </article>
+          <article className="md:col-span-5 md:pt-32">
+            <Photo src={desks} alt="Open workspace with rows of dedicated desks at Yegara Space" className="aspect-[4/5]" pos="object-[45%_50%]" />
+            <div className="mt-6 flex items-start gap-5 border-t border-ink/25 pt-5">
+              <span className="eyebrow text-orange">02</span>
+              <div><h3 className="text-3xl font-bold uppercase md:text-5xl">Dedicated Desks</h3><p className="mt-2 text-muted-foreground">Your seat, every day.</p></div>
+            </div>
+          </article>
+        </div>
+
+        <div className="mt-20 border-t border-ink md:mt-28">
+          {moreSpaces.map((item) => <article key={item.title} className="group grid items-center gap-4 border-b border-ink/25 py-6 md:grid-cols-12 md:gap-8 md:py-8">
+            <span className="eyebrow text-orange md:col-span-1">{item.n}</span>
+            <h3 className="text-4xl font-bold uppercase transition-colors group-hover:text-orange md:col-span-5 md:text-6xl">{item.title}</h3>
+            <p className="text-muted-foreground md:col-span-3">{item.note}</p>
+            <div className="md:col-span-3">{item.image
+              ? <Photo src={item.image} alt={`${item.title} at Yegara Space`} className="aspect-[16/9]" pos={item.pos} />
+              : <div className="hidden aspect-[16/9] items-center justify-center border border-ink/25 md:flex"><SunMark className="h-14 w-14 text-orange" /></div>}</div>
           </article>)}
         </div>
+
+        <article className="mt-20 md:mt-28">
+          <Photo src={boardroom} alt="Yegara Space boardroom with long table and leather chairs" className="aspect-[4/3] md:aspect-[21/9]" pos="object-[50%_55%]" />
+          <div className="mt-6 grid gap-4 border-t border-ink/25 pt-5 md:grid-cols-12 md:gap-8">
+            <span className="eyebrow text-orange md:col-span-1">07</span>
+            <h3 className="text-4xl font-bold uppercase md:col-span-6 md:text-7xl">Boardroom</h3>
+            <p className="text-lg text-muted-foreground md:col-span-5 md:pt-3">For the moments that matter most.</p>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -130,11 +177,11 @@ function HomePage() {
       <div className="section-shell">
         <SectionIntro number="02" label="Community" title={<>Work. Connect. <span className="text-orange">Create.</span></>} />
         <div className="mt-16 grid items-start gap-10 md:grid-cols-12">
-          <div className="group overflow-hidden md:col-span-8"><img src={communityImage} alt="Yegara members working and connecting in the shared lounge" width={1408} height={1104} loading="lazy" className="aspect-[4/3] h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]" /></div>
+          <div className="group overflow-hidden md:col-span-8"><img src={lounge} alt="Yegara Space shared lounge with orange walls and an indoor tree" width={778} height={458} loading="lazy" className="aspect-[4/3] h-full w-full object-cover object-[45%_60%] transition duration-700 group-hover:scale-[1.025]" /></div>
           <div className="reveal md:col-span-4 md:pt-20">
             <SunMark className="mb-10 h-20 w-20 text-orange" />
-            <p className="text-2xl leading-snug">The best work rarely happens in isolation. Yegara brings thoughtful people into one shared rhythm.</p>
-            <p className="mt-8 border-t border-cream/25 pt-6 text-sm leading-relaxed text-cream/65">From a quick exchange over coffee to a room full of new perspectives, our community makes space for what comes next.</p>
+            <p className="text-2xl leading-snug">Yegara isn’t just a place to rent a desk. It’s a professional home where people meet, collaborate and build together.</p>
+            <p className="mt-8 border-t border-cream/25 pt-6 text-sm leading-relaxed text-cream/65">From a quick exchange in the lounge to a new partnership over coffee, the right connections happen naturally here.</p>
           </div>
         </div>
       </div>
@@ -160,16 +207,17 @@ function HomePage() {
 
     <section className="bg-cream py-24 md:py-36">
       <div className="section-shell grid items-center gap-12 md:grid-cols-2">
-        <div className="reveal md:pr-10"><p className="eyebrow mb-8">Yegara Café</p><h2 className="text-6xl font-bold uppercase leading-[0.9] md:text-8xl">Good work starts with <span className="text-orange">good coffee.</span></h2><p className="mt-8 max-w-md text-lg leading-relaxed text-muted-foreground">Our in-house café keeps the day moving—whether you're resetting between meetings or continuing a conversation over a carefully made cup.</p></div>
-        <div className="group relative overflow-hidden"><img src={cafeImage} alt="Ethiopian coffee served at Yegara Café" width={1200} height={1504} loading="lazy" className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.03]"/><SunMark className="absolute right-5 top-5 h-20 w-20 text-orange" /></div>
+        <div className="reveal md:pr-10"><p className="eyebrow mb-8"><span className="text-orange">08</span> · In-house Café</p><h2 className="text-5xl font-bold uppercase leading-[0.9] md:text-7xl">Great work runs on <span className="text-orange">great coffee.</span></h2><p className="mt-8 max-w-md text-lg leading-relaxed text-muted-foreground">In-house Café — because great work runs on great coffee.</p>
+          <Photo src={lounge} alt="Café seating with orange and yellow chairs" className="mt-10 hidden aspect-[16/10] w-2/3 md:block" pos="object-[70%_80%]" /></div>
+        <div className="relative"><Photo src={cafe} alt="Yegara Space in-house café bar with wooden stools" className="aspect-[4/5]" pos="object-[45%_60%]" /><SunMark className="pointer-events-none absolute right-5 top-5 h-20 w-20 text-orange" /></div>
       </div>
     </section>
 
     <section id="visit" className="relative overflow-hidden bg-ink py-24 text-cream md:py-36">
       <div className="section-shell grid gap-14 md:grid-cols-[2fr_1fr] md:items-end">
-        <div><p className="eyebrow mb-10 text-orange">Come see it for yourself</p><h2 className="display-title">Your next<br/><span className="text-orange">chapter</span><br/>starts here.</h2></div>
+        <div><p className="eyebrow mb-10 text-orange">Come see it for yourself</p><h2 className="display-title">Your next<br/><span className="text-orange">workday</span><br/>starts here.</h2></div>
         <div className="border-l border-cream/25 pl-6 md:pl-10">
-          <p className="eyebrow text-cream/50">Find us</p><address className="mt-5 text-2xl font-bold not-italic leading-snug">Bloom Tower<br/>3rd Floor<br/>Kazanchis, Addis Ababa</address>
+          <p className="eyebrow text-cream/50">Find us</p><address className="mt-5 text-2xl font-bold not-italic leading-snug">Yegara Space<br/>Bloom Tower, 3rd Floor<br/>Kazanchis<br/>Addis Ababa, Ethiopia</address>
           <Button asChild variant="yegara" size="lg" className="mt-8 h-12 w-full font-bold uppercase"><a href="https://www.instagram.com/yegaraspace.et/" target="_blank" rel="noreferrer">Book a visit <ArrowUpRight /></a></Button>
         </div>
       </div>
