@@ -89,8 +89,7 @@ function HomePage() {
     <Header />
     <section className="relative min-h-[92svh] overflow-hidden bg-ink text-cream">
       <img src={heroImage} alt="Yegara's shared workspace overlooking Addis Ababa" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover opacity-70" />
-      <div className="absolute inset-0 bg-ink/30" />
-      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink/85 to-transparent" />
+      <div className="absolute inset-0 bg-ink/45" />
       <div className="section-shell relative flex min-h-[92svh] flex-col justify-end pb-10 pt-32">
         <div className="mb-7 flex items-center justify-between border-b border-cream/40 pb-4">
           <p className="eyebrow">Premium coworking · Addis Ababa</p>
@@ -118,8 +117,7 @@ function HomePage() {
         <div className="mt-14 grid gap-px bg-ink md:grid-cols-2">
           {spaces.map((space, index) => <article key={space.title} className="group relative aspect-[5/4] overflow-hidden bg-ink">
             <img src={space.image} alt={`${space.title} at Yegara Space`} width={index === 0 ? 1200 : 1400} height={index === 0 ? 1504 : 1104} loading="lazy" className={`h-full w-full object-cover opacity-80 transition duration-700 group-hover:scale-[1.04] group-hover:opacity-95 ${space.pos}`} />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-transparent to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6 text-cream md:p-9">
+            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-ink/82 p-6 text-cream md:p-9">
               <div><p className="eyebrow mb-2 text-orange">0{index + 1}</p><h3 className="text-3xl font-bold uppercase md:text-5xl">{space.title}</h3><p className="mt-2 text-sm text-cream/70">{space.note}</p></div>
               <span className="grid h-11 w-11 place-items-center border border-cream/50 text-orange transition group-hover:bg-orange group-hover:text-ink"><ArrowUpRight /></span>
             </div>
