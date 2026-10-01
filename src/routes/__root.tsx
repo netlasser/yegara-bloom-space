@@ -75,10 +75,14 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
+    title: "Yegara Space Marketing Website",
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "description", content: "Modern marketing website for Yegara Space, a coworking and boardroom space provider." },
       { name: "author", content: "Yegara Space" },
+      { property: "og:title", content: "Yegara Space Marketing Website" },
+      { property: "og:description", content: "Modern marketing website for Yegara Space, a coworking and boardroom space provider." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },

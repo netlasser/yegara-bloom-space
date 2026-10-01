@@ -13,8 +13,8 @@ import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
   head: () => ({
+    title: "Yegara Space — Premium Coworking in Addis Ababa",
     meta: [
-      { title: "Yegara Space — Premium Coworking in Addis Ababa" },
       { name: "description", content: "Private offices, dedicated desks, hot desks and meeting rooms at Bloom Tower in Kazanchis. One space, many possibilities." },
       { property: "og:title", content: "Yegara Space — One Space, Many Possibilities" },
       { property: "og:description", content: "Addis Ababa's premium coworking space for professionals, entrepreneurs and growing teams." },

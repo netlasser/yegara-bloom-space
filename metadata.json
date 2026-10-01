@@ -1,0 +1,7 @@
+{
+  "name": "Yegara Space Marketing Website",
+  "description": "Modern marketing website for Yegara Space, a coworking and boardroom space provider.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
