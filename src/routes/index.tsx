@@ -167,7 +167,7 @@ function HomePage() {
         <div className="mt-20 border-t border-ink md:mt-28">
           {moreSpaces.map((item) => <article key={item.title} className="group grid items-center gap-4 border-b border-ink/25 py-6 md:grid-cols-12 md:gap-8 md:py-8">
             <span className="eyebrow text-orange md:col-span-1">{item.n}</span>
-            <h3 className="text-4xl font-bold uppercase transition-colors group-hover:text-orange md:col-span-5 md:text-6xl">{item.title}</h3>
+            <h3 className="text-4xl font-bold uppercase transition-colors group-hover:text-orange md:col-span-5 md:text-5xl lg:text-6xl">{item.title}</h3>
             <p className="text-muted-foreground md:col-span-3">{item.note}</p>
             <div className="md:col-span-3">
               <div className="hidden aspect-[16/9] items-center justify-center border border-ink/25 md:flex">
@@ -181,8 +181,8 @@ function HomePage() {
           <Photo src={boardroom} alt="Yegara Space boardroom with long table and leather chairs" className="aspect-[4/3] md:aspect-[21/9]" pos="object-[50%_55%]" />
           <div className="mt-6 grid gap-4 border-t border-ink/25 pt-5 md:grid-cols-12 md:gap-8">
             <span className="eyebrow text-orange md:col-span-1">07</span>
-            <h3 className="text-4xl font-bold uppercase md:col-span-6 md:text-7xl">Boardroom</h3>
-            <p className="text-lg text-muted-foreground md:col-span-5 md:pt-3">For the moments that matter most.</p>
+            <h3 className="text-4xl font-bold uppercase md:col-span-7 md:text-5xl lg:text-7xl">Boardroom</h3>
+            <p className="text-lg text-muted-foreground md:col-span-4 md:pt-3">For the moments that matter most.</p>
           </div>
         </article>
       </div>
