@@ -23,19 +23,17 @@ export function Hero() {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (video && !videoError && videoUrl) {
-      video.defaultMuted = true;
-      video.muted = true;
-      
-      const handleCanPlay = () => {
-        video.play().catch(err => {
-          console.warn("Hero: Autoplay prevented or failed:", err);
-        });
-      };
+    if (!video || videoError || !videoUrl) return undefined;
 
-      video.addEventListener('canplay', handleCanPlay);
-      return () => video.removeEventListener('canplay', handleCanPlay);
-    }
+    video.defaultMuted = true;
+    video.muted = true;
+
+    const handleCanPlay = () => {
+      video.play().catch(() => undefined);
+    };
+
+    video.addEventListener("canplay", handleCanPlay);
+    return () => video.removeEventListener("canplay", handleCanPlay);
   }, [videoUrl, videoError]);
 
   return (
@@ -52,12 +50,8 @@ export function Hero() {
             playsInline 
             poster={posterUrl || undefined}
             aria-hidden="true"
-            preload="auto"
-            onError={(e) => {
-              console.error("Hero: Video failed to load at path:", videoUrl);
-              setVideoError(true);
-            }}
-            style={{ minWidth: '100%', minHeight: '100%' }}
+            preload="metadata"
+            onError={() => setVideoError(true)}
           >
             <source src={videoUrl} type="video/mp4" />
             {/* Native browser fallback if source tag fails */}

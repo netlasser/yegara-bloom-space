@@ -46,10 +46,10 @@ const lounge = resolveAsset(loungeAsset);
 const cafe = resolveAsset(cafeAsset);
 
 const moreSpaces = [
-  { n: "03", title: "Cubicles", note: "Considered workstations for deep work.", image: desks, pos: "object-[20%_60%]" },
-  { n: "04", title: "Hot Desks", note: "Flexible seating in a vibrant environment.", image: lounge, pos: "object-[60%_70%]" },
-  { n: "05", title: "Phone Booths", note: "Acoustic privacy for your important calls.", image: officeOne, pos: "object-center" },
-  { n: "06", title: "Meeting Rooms", note: "Professional settings for team collaboration.", image: officeExec, pos: "object-[50%_40%]" },
+  { n: "03", title: "Cubicles", note: "Quiet corners, real productivity." },
+  { n: "04", title: "Hot Desks", note: "Drop in, plug in, get it done." },
+  { n: "05", title: "Phone Booths", note: "For the calls that need privacy." },
+  { n: "06", title: "Meeting Rooms", note: "Where ideas get sharper." },
 ] as const;
 
 function Photo({ src, alt, className = "", pos = "object-center" }: { src: string; alt: string; className?: string; pos?: string }) {
@@ -139,7 +139,7 @@ function HomePage() {
         <p className="reveal mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground md:ml-[25%]">From focused solo work to boardroom decisions, there is a space for the way you work.</p>
 
         <div className="mt-16 grid gap-14 md:grid-cols-12 md:gap-8">
-          <article className="md:col-span-7">
+          <article className="min-w-0 md:col-span-7">
             <div className="relative">
               <Photo src={officeOne} alt="1-person private office with individual desk and wood cabinetry at Yegara Space" className="aspect-[4/3]" pos="object-[50%_60%]" />
               <Photo src={officeExec} alt="Executive private office with desk and yellow lounge chairs at Yegara Space" className="absolute -bottom-10 right-4 hidden aspect-[4/3] w-[38%] border-4 border-cream md:block shadow-xl" />
@@ -152,12 +152,12 @@ function HomePage() {
               </div>
             </div>
           </article>
-          <article className="md:col-span-5 md:pt-32">
+          <article className="min-w-0 md:col-span-5 md:pt-32">
             <Photo src={desks} alt="Open workspace with rows of dedicated desks and workstations at Yegara Space" className="aspect-[4/5]" pos="object-[45%_50%]" />
             <div className="mt-6 flex items-start gap-5 border-t border-ink/25 pt-5">
               <span className="eyebrow text-orange">02</span>
               <div>
-                <h3 className="text-3xl font-bold uppercase md:text-5xl">Dedicated Desks</h3>
+                <h3 className="text-3xl font-bold uppercase md:text-4xl lg:text-5xl">Dedicated Desks</h3>
                 <p className="mt-2 text-muted-foreground">Your seat, every day.</p>
               </div>
             </div>
@@ -167,11 +167,13 @@ function HomePage() {
         <div className="mt-20 border-t border-ink md:mt-28">
           {moreSpaces.map((item) => <article key={item.title} className="group grid items-center gap-4 border-b border-ink/25 py-6 md:grid-cols-12 md:gap-8 md:py-8">
             <span className="eyebrow text-orange md:col-span-1">{item.n}</span>
-            <h3 className="text-4xl font-bold uppercase transition-colors group-hover:text-orange md:col-span-5 md:text-6xl">{item.title}</h3>
+            <h3 className="text-4xl font-bold uppercase transition-colors group-hover:text-orange md:col-span-5 md:text-5xl lg:text-6xl">{item.title}</h3>
             <p className="text-muted-foreground md:col-span-3">{item.note}</p>
-            <div className="md:col-span-3">{item.image
-              ? <Photo src={item.image} alt={`${item.title} at Yegara Space`} className="aspect-[16/9]" pos={item.pos} />
-              : <div className="hidden aspect-[16/9] items-center justify-center border border-ink/25 md:flex"><SunMark className="h-14 w-14 text-orange" /></div>}</div>
+            <div className="md:col-span-3">
+              <div className="hidden aspect-[16/9] items-center justify-center border border-ink/25 md:flex">
+                <SunMark className="h-14 w-14 text-orange" />
+              </div>
+            </div>
           </article>)}
         </div>
 
@@ -179,8 +181,8 @@ function HomePage() {
           <Photo src={boardroom} alt="Yegara Space boardroom with long table and leather chairs" className="aspect-[4/3] md:aspect-[21/9]" pos="object-[50%_55%]" />
           <div className="mt-6 grid gap-4 border-t border-ink/25 pt-5 md:grid-cols-12 md:gap-8">
             <span className="eyebrow text-orange md:col-span-1">07</span>
-            <h3 className="text-4xl font-bold uppercase md:col-span-6 md:text-7xl">Boardroom</h3>
-            <p className="text-lg text-muted-foreground md:col-span-5 md:pt-3">For the moments that matter most.</p>
+            <h3 className="text-4xl font-bold uppercase md:col-span-7 md:text-5xl lg:text-7xl">Boardroom</h3>
+            <p className="text-lg text-muted-foreground md:col-span-4 md:pt-3">For the moments that matter most.</p>
           </div>
         </article>
       </div>
