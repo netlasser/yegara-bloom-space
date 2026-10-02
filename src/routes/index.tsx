@@ -46,10 +46,10 @@ const lounge = resolveAsset(loungeAsset);
 const cafe = resolveAsset(cafeAsset);
 
 const moreSpaces = [
-  { n: "03", title: "Cubicles", note: "Considered workstations for deep work.", image: desks, pos: "object-[20%_60%]" },
-  { n: "04", title: "Hot Desks", note: "Flexible seating in a vibrant environment.", image: lounge, pos: "object-[60%_70%]" },
-  { n: "05", title: "Phone Booths", note: "Acoustic privacy for your important calls.", image: officeOne, pos: "object-center" },
-  { n: "06", title: "Meeting Rooms", note: "Professional settings for team collaboration.", image: officeExec, pos: "object-[50%_40%]" },
+  { n: "03", title: "Cubicles", note: "Quiet corners, real productivity." },
+  { n: "04", title: "Hot Desks", note: "Drop in, plug in, get it done." },
+  { n: "05", title: "Phone Booths", note: "For the calls that need privacy." },
+  { n: "06", title: "Meeting Rooms", note: "Where ideas get sharper." },
 ] as const;
 
 function Photo({ src, alt, className = "", pos = "object-center" }: { src: string; alt: string; className?: string; pos?: string }) {
@@ -169,9 +169,11 @@ function HomePage() {
             <span className="eyebrow text-orange md:col-span-1">{item.n}</span>
             <h3 className="text-4xl font-bold uppercase transition-colors group-hover:text-orange md:col-span-5 md:text-6xl">{item.title}</h3>
             <p className="text-muted-foreground md:col-span-3">{item.note}</p>
-            <div className="md:col-span-3">{item.image
-              ? <Photo src={item.image} alt={`${item.title} at Yegara Space`} className="aspect-[16/9]" pos={item.pos} />
-              : <div className="hidden aspect-[16/9] items-center justify-center border border-ink/25 md:flex"><SunMark className="h-14 w-14 text-orange" /></div>}</div>
+            <div className="md:col-span-3">
+              <div className="hidden aspect-[16/9] items-center justify-center border border-ink/25 md:flex">
+                <SunMark className="h-14 w-14 text-orange" />
+              </div>
+            </div>
           </article>)}
         </div>
 
