@@ -139,7 +139,7 @@ function HomePage() {
         <p className="reveal mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground md:ml-[25%]">From focused solo work to boardroom decisions, there is a space for the way you work.</p>
 
         <div className="mt-16 grid gap-14 md:grid-cols-12 md:gap-8">
-          <article className="md:col-span-7">
+          <article className="min-w-0 md:col-span-7">
             <div className="relative">
               <Photo src={officeOne} alt="1-person private office with individual desk and wood cabinetry at Yegara Space" className="aspect-[4/3]" pos="object-[50%_60%]" />
               <Photo src={officeExec} alt="Executive private office with desk and yellow lounge chairs at Yegara Space" className="absolute -bottom-10 right-4 hidden aspect-[4/3] w-[38%] border-4 border-cream md:block shadow-xl" />
@@ -152,12 +152,12 @@ function HomePage() {
               </div>
             </div>
           </article>
-          <article className="md:col-span-5 md:pt-32">
+          <article className="min-w-0 md:col-span-5 md:pt-32">
             <Photo src={desks} alt="Open workspace with rows of dedicated desks and workstations at Yegara Space" className="aspect-[4/5]" pos="object-[45%_50%]" />
             <div className="mt-6 flex items-start gap-5 border-t border-ink/25 pt-5">
               <span className="eyebrow text-orange">02</span>
               <div>
-                <h3 className="text-3xl font-bold uppercase md:text-5xl">Dedicated Desks</h3>
+                <h3 className="text-3xl font-bold uppercase md:text-4xl lg:text-5xl">Dedicated Desks</h3>
                 <p className="mt-2 text-muted-foreground">Your seat, every day.</p>
               </div>
             </div>
