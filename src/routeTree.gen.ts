@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SpacesIndexRouteImport } from './routes/spaces.index'
+import { Route as SpacesSlugRouteImport } from './routes/spaces.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SpacesIndexRoute = SpacesIndexRouteImport.update({
+  id: '/spaces/',
+  path: '/spaces/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpacesSlugRoute = SpacesSlugRouteImport.update({
+  id: '/spaces/$slug',
+  path: '/spaces/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/spaces/$slug': typeof SpacesSlugRoute
+  '/spaces/': typeof SpacesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/spaces/$slug': typeof SpacesSlugRoute
+  '/spaces': typeof SpacesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/spaces/$slug': typeof SpacesSlugRoute
+  '/spaces/': typeof SpacesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/spaces/$slug' | '/spaces/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/spaces/$slug' | '/spaces'
+  id: '__root__' | '/' | '/spaces/$slug' | '/spaces/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SpacesSlugRoute: typeof SpacesSlugRoute
+  SpacesIndexRoute: typeof SpacesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/spaces/': {
+      id: '/spaces/'
+      path: '/spaces'
+      fullPath: '/spaces/'
+      preLoaderRoute: typeof SpacesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/spaces/$slug': {
+      id: '/spaces/$slug'
+      path: '/spaces/$slug'
+      fullPath: '/spaces/$slug'
+      preLoaderRoute: typeof SpacesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SpacesSlugRoute: SpacesSlugRoute,
+  SpacesIndexRoute: SpacesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
