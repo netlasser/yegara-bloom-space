@@ -16,7 +16,7 @@ export function SunMark({ className = "" }: { className?: string }) {
   );
 }
 
-export function Photo({ src, alt, className = "", pos = "object-center", eager = false }: { src: string; alt: string; className?: string; pos?: string; eager?: boolean }) {
+export function Photo({ src, alt, className = "", pos = "object-center", eager = false }: { src: string; alt: string; className?: string; pos?: string | undefined; eager?: boolean }) {
   return (
     <div className={`group overflow-hidden bg-ink ${className}`}>
       <img src={src} alt={alt} width={1200} height={800} loading={eager ? "eager" : "lazy"} decoding="async"

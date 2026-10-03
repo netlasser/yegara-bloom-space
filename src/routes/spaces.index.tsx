@@ -64,8 +64,8 @@ function SpacesPage() {
       <section className="bg-cream py-20 md:py-32">
         <div className="section-shell grid gap-10 md:grid-cols-12 md:gap-8">
           <div className="relative min-w-0 md:col-span-8">
-            <Photo src={po.images[0].src} alt={po.images[0].alt} pos={po.images[0].pos} className="aspect-[4/3]" eager />
-            <Photo src={po.images[1].src} alt={po.images[1].alt} className="absolute -bottom-10 -right-2 hidden aspect-[4/3] w-[40%] border-4 border-cream md:block" />
+            <Photo src={po.images[0]!.src} alt={po.images[0]!.alt} pos={po.images[0]!.pos} className="aspect-[4/3]" eager />
+            <Photo src={po.images[1]!.src} alt={po.images[1]!.alt} className="absolute -bottom-10 -right-2 hidden aspect-[4/3] w-[40%] border-4 border-cream md:block" />
           </div>
           <div className="min-w-0 md:col-span-4 md:flex md:flex-col md:justify-between">
             <BigNum n="01" />
@@ -82,7 +82,7 @@ function SpacesPage() {
             <Meta space={dd} />
           </div>
           <div className="order-1 min-w-0 md:order-2 md:col-span-6 md:col-start-7">
-            <Photo src={dd.images[0].src} alt={dd.images[0].alt} pos={dd.images[0].pos} className="aspect-[4/5]" />
+            <Photo src={dd.images[0]!.src} alt={dd.images[0]!.alt} pos={dd.images[0]!.pos} className="aspect-[4/5]" />
           </div>
         </div>
       </section>
@@ -90,7 +90,7 @@ function SpacesPage() {
       {/* 03 Cubicles — wide editorial */}
       <section className="bg-ink py-20 text-cream md:py-32">
         <div className="section-shell">
-          <Photo src={cu.images[0].src} alt={cu.images[0].alt} pos={cu.images[0].pos} className="aspect-[4/3] md:aspect-[21/9]" />
+          <Photo src={cu.images[0]!.src} alt={cu.images[0]!.alt} pos={cu.images[0]!.pos} className="aspect-[4/3] md:aspect-[21/9]" />
           <div className="mt-10 grid gap-8 md:grid-cols-12">
             <div className="md:col-span-3"><BigNum n="03" dark /></div>
             <div className="md:col-span-6 md:col-start-5"><Meta space={cu} dark /></div>
@@ -102,7 +102,7 @@ function SpacesPage() {
       <section className="bg-cream py-20 md:py-32">
         <div className="section-shell grid gap-16 md:grid-cols-12 md:gap-8">
           <div className="min-w-0 md:col-span-7">
-            <Photo src={hd.images[0].src} alt={hd.images[0].alt} pos={hd.images[0].pos} className="aspect-[16/11]" />
+            <Photo src={hd.images[0]!.src} alt={hd.images[0]!.alt} pos={hd.images[0]!.pos} className="aspect-[16/11]" />
             <div className="mt-8 md:pr-[30%]"><Meta space={hd} /></div>
           </div>
           <div className="min-w-0 md:col-span-4 md:col-start-9 md:pt-48">
@@ -134,7 +134,7 @@ function SpacesPage() {
             <span className="eyebrow text-orange md:col-span-3">{br.n} — Boardroom</span>
             <h2 className="text-5xl font-bold uppercase leading-[0.9] md:col-span-9 md:text-8xl">For the moments<br /><span className="text-orange">that matter most.</span></h2>
           </div>
-          <Photo src={br.images[0].src} alt={br.images[0].alt} pos={br.images[0].pos} className="mt-12 aspect-[4/3] md:aspect-[21/9]" />
+          <Photo src={br.images[0]!.src} alt={br.images[0]!.alt} pos={br.images[0]!.pos} className="mt-12 aspect-[4/3] md:aspect-[21/9]" />
           <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <p className="max-w-lg text-lg text-cream/70">{br.intro}</p>
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -149,13 +149,13 @@ function SpacesPage() {
       <section className="bg-cream py-20 md:py-32">
         <div className="section-shell grid items-center gap-12 md:grid-cols-12">
           <div className="relative min-w-0 md:col-span-6">
-            <Photo src={cf.images[0].src} alt={cf.images[0].alt} pos={cf.images[0].pos} className="aspect-[4/5]" />
+            <Photo src={cf.images[0]!.src} alt={cf.images[0]!.alt} pos={cf.images[0]!.pos} className="aspect-[4/5]" />
             <SunMark className="pointer-events-none absolute right-5 top-5 h-20 w-20 text-orange" />
           </div>
           <div className="min-w-0 md:col-span-5 md:col-start-8">
             <BigNum n="08" />
             <Meta space={cf} />
-            <Photo src={cf.images[1].src} alt={cf.images[1].alt} pos={cf.images[1].pos} className="mt-10 hidden aspect-[16/10] w-2/3 md:block" />
+            <Photo src={cf.images[1]!.src} alt={cf.images[1]!.alt} pos={cf.images[1]!.pos} className="mt-10 hidden aspect-[16/10] w-2/3 md:block" />
           </div>
         </div>
       </section>
