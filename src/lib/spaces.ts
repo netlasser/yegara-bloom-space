@@ -4,6 +4,9 @@ import officeExecAsset from "@/assets/yegara-office-exec.jpg.asset.json";
 import boardroomAsset from "@/assets/yegara-boardroom.jpg.asset.json";
 import loungeAsset from "@/assets/yegara-lounge.jpg.asset.json";
 import cafeAsset from "@/assets/yegara-cafe.jpg.asset.json";
+import hotDesksAsset from "@/assets/yegara-hot-desks.png.asset.json";
+import meetingSpacesAsset from "@/assets/yegara-meeting-spaces.png.asset.json";
+import phoneBoothsAsset from "@/assets/yegara-phone-booths.png.asset.json";
 
 export type SpaceImage = { src: string; alt: string; pos?: string };
 
@@ -50,63 +53,50 @@ export const spaces: Space[] = [
       { label: "Availability", value: "Talk to us about availability." },
     ],
     images: [{ src: desksAsset.url, alt: "Open workspace with rows of dedicated desks at Yegara Space", pos: "object-[45%_50%]" }],
-    related: ["hot-desks", "private-offices", "cubicles"],
-  },
-  {
-    slug: "cubicles",
-    n: "03",
-    name: "Cubicles",
-    tagline: "Quiet corners, real productivity.",
-    intro: "A quieter corner of the floor for heads-down work, without shutting yourself away from the space.",
-    facts: [
-      { label: "Location", value: LOCATION },
-      { label: "Availability", value: "Talk to us about availability." },
-    ],
-    images: [{ src: desksAsset.url, alt: "Workstations in the Yegara Space workspace", pos: "object-[20%_60%]" }],
-    related: ["dedicated-desks", "phone-booths", "hot-desks"],
+    related: ["hot-desks", "private-offices", "phone-booths"],
   },
   {
     slug: "hot-desks",
-    n: "04",
+    n: "03",
     name: "Hot Desks",
-    tagline: "Drop in, plug in, get it done.",
-    intro: "Flexible seating for the days you need a proper place to work. Arrive, settle in and get it done.",
+    tagline: "A flexible place to land, focus and move your day forward.",
+    intro: "Choose a comfortable place in Yegara's shared workspace whenever you need a productive change of scene. Hot Desks give independent professionals, founders and visiting team members the freedom to arrive, settle in and work alongside a lively community—without committing to the same desk every day.",
     facts: [
       { label: "Location", value: LOCATION },
       { label: "Availability", value: "Talk to us about availability." },
     ],
-    images: [{ src: loungeAsset.url, alt: "Shared lounge seating at Yegara Space", pos: "object-[60%_70%]" }],
-    related: ["dedicated-desks", "cubicles", "cafe"],
+    images: [{ src: hotDesksAsset.url, alt: "Flexible hot desk seating in the bright shared workspace at Yegara Space", pos: "object-center" }],
+    related: ["dedicated-desks", "phone-booths", "cafe"],
   },
   {
     slug: "phone-booths",
-    n: "05",
+    n: "04",
     name: "Phone Booths",
-    tagline: "For the calls that need privacy.",
-    intro: "Step away from the floor for the calls and video meetings that need a quiet, private moment.",
+    tagline: "A private pause for calls that need your full attention.",
+    intro: "Step away from the energy of the shared floor when a conversation calls for privacy and focus. Yegara's enclosed Phone Booths give you a dedicated setting for one-to-one calls, virtual meetings and moments when you need to speak without distracting the people working around you.",
     facts: [
       { label: "Location", value: LOCATION },
       { label: "Availability", value: "Talk to us about availability." },
     ],
-    images: [],
-    related: ["meeting-rooms", "cubicles"],
+    images: [{ src: phoneBoothsAsset.url, alt: "Glass-fronted private phone booths at Yegara Space", pos: "object-center" }],
+    related: ["meeting-rooms", "hot-desks", "dedicated-desks"],
   },
   {
     slug: "meeting-rooms",
-    n: "06",
+    n: "05",
     name: "Meeting Rooms",
-    tagline: "Where ideas get sharper.",
-    intro: "Rooms for the conversations that move work forward — team sessions, client meetings and presentations.",
+    tagline: "Where conversations become decisions and ideas move forward.",
+    intro: "Bring people together in a considered setting made for productive conversation. From collaborative team sessions and focused planning to client meetings and presentations, Yegara's Meeting Rooms create the separation and professional atmosphere your group needs to stay present and make progress.",
     facts: [
       { label: "Location", value: LOCATION },
       { label: "Availability", value: "Talk to us about availability." },
     ],
-    images: [],
+    images: [{ src: meetingSpacesAsset.url, alt: "Bright meeting spaces with round tables and comfortable chairs at Yegara Space", pos: "object-center" }],
     related: ["boardroom", "private-offices", "phone-booths"],
   },
   {
     slug: "boardroom",
-    n: "07",
+    n: "06",
     name: "Boardroom",
     tagline: "For the moments that matter most.",
     intro: "A formal setting for decisions, negotiations and the meetings you want to get exactly right.",
@@ -119,7 +109,7 @@ export const spaces: Space[] = [
   },
   {
     slug: "cafe",
-    n: "08",
+    n: "07",
     name: "In-house Café",
     tagline: "Because great work runs on great coffee.",
     intro: "Coffee, a break and an easy conversation — right inside Yegara Space.",
