@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowDownRight, ArrowUpRight, Coffee, Menu, Sparkles, Users, Wifi, X } from "lucide-react";
 import { useState } from "react";
 
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/")({
 });
 
 const navItems = [
-  ["Spaces", "#spaces"], ["Amenities", "#amenities"], ["Community", "#community"], ["About", "#about"],
+  ["Amenities", "#amenities"], ["Community", "#community"], ["About", "#about"],
 ] as const;
 
 const desks = resolveAsset(desksAsset);
@@ -46,10 +46,10 @@ const lounge = resolveAsset(loungeAsset);
 const cafe = resolveAsset(cafeAsset);
 
 const moreSpaces = [
-  { n: "03", title: "Cubicles", note: "Quiet corners, real productivity." },
-  { n: "04", title: "Hot Desks", note: "Drop in, plug in, get it done." },
-  { n: "05", title: "Phone Booths", note: "For the calls that need privacy." },
-  { n: "06", title: "Meeting Rooms", note: "Where ideas get sharper." },
+  { n: "03", title: "Cubicles", note: "Quiet corners, real productivity.", slug: "cubicles" },
+  { n: "04", title: "Hot Desks", note: "Drop in, plug in, get it done.", slug: "hot-desks" },
+  { n: "05", title: "Phone Booths", note: "For the calls that need privacy.", slug: "phone-booths" },
+  { n: "06", title: "Meeting Rooms", note: "Where ideas get sharper.", slug: "meeting-rooms" },
 ] as const;
 
 function Photo({ src, alt, className = "", pos = "object-center" }: { src: string; alt: string; className?: string; pos?: string }) {
@@ -96,6 +96,7 @@ function Header() {
       <div className="section-shell flex h-20 items-center justify-between">
         <Logo light />
         <nav aria-label="Primary navigation" className="hidden items-center gap-8 md:flex">
+          <Link to="/spaces" className="eyebrow transition-colors hover:text-orange" activeProps={{ className: "text-orange" }}>Spaces</Link>
           {navItems.map(([label, href]) => <a key={href} href={href} className="eyebrow transition-colors hover:text-orange">{label}</a>)}
         </nav>
         <Button asChild variant="yegara" size="lg" className="hidden h-11 px-6 font-bold uppercase tracking-[0.12em] md:inline-flex">
@@ -106,7 +107,10 @@ function Header() {
         </Button>
       </div>
       {open && <nav aria-label="Mobile navigation" className="border-t border-cream/15 bg-ink px-4 py-7 md:hidden">
-        <div className="flex flex-col gap-5">{navItems.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)} className="text-3xl font-bold uppercase">{label}</a>)}</div>
+        <div className="flex flex-col gap-5">
+          <Link to="/spaces" onClick={() => setOpen(false)} className="text-3xl font-bold uppercase">Spaces</Link>
+          {navItems.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)} className="text-3xl font-bold uppercase">{label}</a>)}
+        </div>
         <Button asChild variant="yegara" className="mt-7 h-12 w-full"><a href="#visit" onClick={() => setOpen(false)}>Book a visit <ArrowUpRight /></a></Button>
       </nav>}
     </header>
@@ -139,7 +143,7 @@ function HomePage() {
         <p className="reveal mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground md:ml-[25%]">From focused solo work to boardroom decisions, there is a space for the way you work.</p>
 
         <div className="mt-16 grid gap-14 md:grid-cols-12 md:gap-8">
-          <article className="min-w-0 md:col-span-7">
+          <Link to="/spaces/$slug" params={{ slug: "private-offices" }} className="block min-w-0 md:col-span-7">
             <div className="relative">
               <Photo src={officeOne} alt="1-person private office with individual desk and wood cabinetry at Yegara Space" className="aspect-[4/3]" pos="object-[50%_60%]" />
               <Photo src={officeExec} alt="Executive private office with desk and yellow lounge chairs at Yegara Space" className="absolute -bottom-10 right-4 hidden aspect-[4/3] w-[38%] border-4 border-cream md:block shadow-xl" />
@@ -151,8 +155,8 @@ function HomePage() {
                 <p className="mt-2 text-muted-foreground">Executive &amp; 1-Person, for focus that means business.</p>
               </div>
             </div>
-          </article>
-          <article className="min-w-0 md:col-span-5 md:pt-32">
+          </Link>
+          <Link to="/spaces/$slug" params={{ slug: "dedicated-desks" }} className="block min-w-0 md:col-span-5 md:pt-32">
             <Photo src={desks} alt="Open workspace with rows of dedicated desks and workstations at Yegara Space" className="aspect-[4/5]" pos="object-[45%_50%]" />
             <div className="mt-6 flex items-start gap-5 border-t border-ink/25 pt-5">
               <span className="eyebrow text-orange">02</span>
@@ -161,13 +165,13 @@ function HomePage() {
                 <p className="mt-2 text-muted-foreground">Your seat, every day.</p>
               </div>
             </div>
-          </article>
+          </Link>
         </div>
 
         <div className="mt-20 border-t border-ink md:mt-28">
           {moreSpaces.map((item) => <article key={item.title} className="group grid items-center gap-4 border-b border-ink/25 py-6 md:grid-cols-12 md:gap-8 md:py-8">
             <span className="eyebrow text-orange md:col-span-1">{item.n}</span>
-            <h3 className="text-4xl font-bold uppercase transition-colors group-hover:text-orange md:col-span-5 md:text-5xl lg:text-6xl">{item.title}</h3>
+            <h3 className="text-4xl font-bold uppercase md:col-span-5 md:text-5xl lg:text-6xl"><Link to="/spaces/$slug" params={{ slug: item.slug }} className="transition-colors group-hover:text-orange hover:text-orange">{item.title}</Link></h3>
             <p className="text-muted-foreground md:col-span-3">{item.note}</p>
             <div className="md:col-span-3">
               <div className="hidden aspect-[16/9] items-center justify-center border border-ink/25 md:flex">
@@ -181,7 +185,7 @@ function HomePage() {
           <Photo src={boardroom} alt="Yegara Space boardroom with long table and leather chairs" className="aspect-[4/3] md:aspect-[21/9]" pos="object-[50%_55%]" />
           <div className="mt-6 grid gap-4 border-t border-ink/25 pt-5 md:grid-cols-12 md:gap-8">
             <span className="eyebrow text-orange md:col-span-1">07</span>
-            <h3 className="text-4xl font-bold uppercase md:col-span-7 md:text-5xl lg:text-7xl">Boardroom</h3>
+            <h3 className="text-4xl font-bold uppercase md:col-span-7 md:text-5xl lg:text-7xl"><Link to="/spaces/$slug" params={{ slug: "boardroom" }} className="transition-colors hover:text-orange">Boardroom</Link></h3>
             <p className="text-lg text-muted-foreground md:col-span-4 md:pt-3">For the moments that matter most.</p>
           </div>
         </article>
