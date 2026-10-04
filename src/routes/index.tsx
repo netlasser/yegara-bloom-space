@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowDownRight, ArrowUpRight, Coffee, Menu, Sparkles, Users, Wifi, X } from "lucide-react";
 import { useState } from "react";
 
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/")({
 });
 
 const navItems = [
-  ["Spaces", "#spaces"], ["Amenities", "#amenities"], ["Community", "#community"], ["About", "#about"],
+  ["Amenities", "#amenities"], ["Community", "#community"], ["About", "#about"],
 ] as const;
 
 const desks = resolveAsset(desksAsset);
@@ -46,10 +46,10 @@ const lounge = resolveAsset(loungeAsset);
 const cafe = resolveAsset(cafeAsset);
 
 const moreSpaces = [
-  { n: "03", title: "Cubicles", note: "Quiet corners, real productivity." },
-  { n: "04", title: "Hot Desks", note: "Drop in, plug in, get it done." },
-  { n: "05", title: "Phone Booths", note: "For the calls that need privacy." },
-  { n: "06", title: "Meeting Rooms", note: "Where ideas get sharper." },
+  { n: "03", title: "Cubicles", note: "Quiet corners, real productivity.", to: "/spaces/cubicles" },
+  { n: "04", title: "Hot Desks", note: "Drop in, plug in, get it done.", to: "/spaces/hot-desks" },
+  { n: "05", title: "Phone Booths", note: "For the calls that need privacy.", to: "/spaces/phone-booths" },
+  { n: "06", title: "Meeting Rooms", note: "Where ideas get sharper.", to: "/spaces/meeting-rooms" },
 ] as const;
 
 function Photo({ src, alt, className = "", pos = "object-center" }: { src: string; alt: string; className?: string; pos?: string }) {
@@ -96,6 +96,7 @@ function Header() {
       <div className="section-shell flex h-20 items-center justify-between">
         <Logo light />
         <nav aria-label="Primary navigation" className="hidden items-center gap-8 md:flex">
+          <Link to="/spaces" className="eyebrow transition-colors hover:text-orange" activeProps={{ className: "text-orange" }}>Spaces</Link>
           {navItems.map(([label, href]) => <a key={href} href={href} className="eyebrow transition-colors hover:text-orange">{label}</a>)}
         </nav>
         <Button asChild variant="yegara" size="lg" className="hidden h-11 px-6 font-bold uppercase tracking-[0.12em] md:inline-flex">
@@ -106,7 +107,10 @@ function Header() {
         </Button>
       </div>
       {open && <nav aria-label="Mobile navigation" className="border-t border-cream/15 bg-ink px-4 py-7 md:hidden">
-        <div className="flex flex-col gap-5">{navItems.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)} className="text-3xl font-bold uppercase">{label}</a>)}</div>
+        <div className="flex flex-col gap-5">
+          <Link to="/spaces" onClick={() => setOpen(false)} className="text-3xl font-bold uppercase">Spaces</Link>
+          {navItems.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)} className="text-3xl font-bold uppercase">{label}</a>)}
+        </div>
         <Button asChild variant="yegara" className="mt-7 h-12 w-full"><a href="#visit" onClick={() => setOpen(false)}>Book a visit <ArrowUpRight /></a></Button>
       </nav>}
     </header>
