@@ -46,10 +46,10 @@ const lounge = resolveAsset(loungeAsset);
 const cafe = resolveAsset(cafeAsset);
 
 const moreSpaces = [
-  { n: "03", title: "Cubicles", note: "Quiet corners, real productivity.", to: "/spaces/cubicles" },
-  { n: "04", title: "Hot Desks", note: "Drop in, plug in, get it done.", to: "/spaces/hot-desks" },
-  { n: "05", title: "Phone Booths", note: "For the calls that need privacy.", to: "/spaces/phone-booths" },
-  { n: "06", title: "Meeting Rooms", note: "Where ideas get sharper.", to: "/spaces/meeting-rooms" },
+  { n: "03", title: "Cubicles", note: "Quiet corners, real productivity.", slug: "cubicles" },
+  { n: "04", title: "Hot Desks", note: "Drop in, plug in, get it done.", slug: "hot-desks" },
+  { n: "05", title: "Phone Booths", note: "For the calls that need privacy.", slug: "phone-booths" },
+  { n: "06", title: "Meeting Rooms", note: "Where ideas get sharper.", slug: "meeting-rooms" },
 ] as const;
 
 function Photo({ src, alt, className = "", pos = "object-center" }: { src: string; alt: string; className?: string; pos?: string }) {
@@ -171,7 +171,7 @@ function HomePage() {
         <div className="mt-20 border-t border-ink md:mt-28">
           {moreSpaces.map((item) => <article key={item.title} className="group grid items-center gap-4 border-b border-ink/25 py-6 md:grid-cols-12 md:gap-8 md:py-8">
             <span className="eyebrow text-orange md:col-span-1">{item.n}</span>
-            <h3 className="text-4xl font-bold uppercase md:col-span-5 md:text-5xl lg:text-6xl"><Link to="/spaces/$slug" params={{ slug: item.to }} className="transition-colors group-hover:text-orange hover:text-orange">{item.title}</Link></h3>
+            <h3 className="text-4xl font-bold uppercase md:col-span-5 md:text-5xl lg:text-6xl"><Link to="/spaces/$slug" params={{ slug: item.slug }} className="transition-colors group-hover:text-orange hover:text-orange">{item.title}</Link></h3>
             <p className="text-muted-foreground md:col-span-3">{item.note}</p>
             <div className="md:col-span-3">
               <div className="hidden aspect-[16/9] items-center justify-center border border-ink/25 md:flex">
