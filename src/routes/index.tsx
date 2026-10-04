@@ -9,6 +9,9 @@ import officeExecAsset from "@/assets/yegara-office-exec.jpg.asset.json";
 import boardroomAsset from "@/assets/yegara-boardroom.jpg.asset.json";
 import loungeAsset from "@/assets/yegara-lounge.jpg.asset.json";
 import cafeAsset from "@/assets/yegara-cafe.jpg.asset.json";
+import hotDesksAsset from "@/assets/yegara-hot-desks.png.asset.json";
+import meetingSpacesAsset from "@/assets/yegara-meeting-spaces.png.asset.json";
+import phoneBoothsAsset from "@/assets/yegara-phone-booths.png.asset.json";
 import { Button } from "@/components/ui/button";
 
 /**
@@ -44,12 +47,14 @@ const officeExec = resolveAsset(officeExecAsset);
 const boardroom = resolveAsset(boardroomAsset);
 const lounge = resolveAsset(loungeAsset);
 const cafe = resolveAsset(cafeAsset);
+const hotDesks = resolveAsset(hotDesksAsset);
+const meetingSpaces = resolveAsset(meetingSpacesAsset);
+const phoneBooths = resolveAsset(phoneBoothsAsset);
 
 const moreSpaces = [
-  { n: "03", title: "Cubicles", note: "Quiet corners, real productivity.", slug: "cubicles" },
-  { n: "04", title: "Hot Desks", note: "Drop in, plug in, get it done.", slug: "hot-desks" },
-  { n: "05", title: "Phone Booths", note: "For the calls that need privacy.", slug: "phone-booths" },
-  { n: "06", title: "Meeting Rooms", note: "Where ideas get sharper.", slug: "meeting-rooms" },
+  { n: "03", title: "Hot Desks", note: "A flexible place to land, focus and move your day forward—ideal when you need a productive change of scene without committing to the same desk every day.", slug: "hot-desks", image: hotDesks, alt: "Flexible hot desk seating in the bright shared workspace at Yegara Space" },
+  { n: "04", title: "Phone Booths", note: "A private setting for one-to-one calls, virtual meetings and conversations that need your full attention away from the shared floor.", slug: "phone-booths", image: phoneBooths, alt: "Glass-fronted private phone booths at Yegara Space" },
+  { n: "05", title: "Meeting Rooms", note: "A considered place for team sessions, client conversations and presentations—giving every group room to focus and move ideas forward.", slug: "meeting-rooms", image: meetingSpaces, alt: "Bright meeting spaces with round tables and comfortable chairs at Yegara Space" },
 ] as const;
 
 function Photo({ src, alt, className = "", pos = "object-center" }: { src: string; alt: string; className?: string; pos?: string }) {
@@ -172,11 +177,9 @@ function HomePage() {
           {moreSpaces.map((item) => <article key={item.title} className="group grid items-center gap-4 border-b border-ink/25 py-6 md:grid-cols-12 md:gap-8 md:py-8">
             <span className="eyebrow text-orange md:col-span-1">{item.n}</span>
             <h3 className="text-4xl font-bold uppercase md:col-span-5 md:text-5xl lg:text-6xl"><Link to="/spaces/$slug" params={{ slug: item.slug }} className="transition-colors group-hover:text-orange hover:text-orange">{item.title}</Link></h3>
-            <p className="text-muted-foreground md:col-span-3">{item.note}</p>
+            <p className="leading-relaxed text-muted-foreground md:col-span-3">{item.note}</p>
             <div className="md:col-span-3">
-              <div className="hidden aspect-[16/9] items-center justify-center border border-ink/25 md:flex">
-                <SunMark className="h-14 w-14 text-orange" />
-              </div>
+              <Photo src={item.image} alt={item.alt} className="aspect-[16/9]" />
             </div>
           </article>)}
         </div>
@@ -184,7 +187,7 @@ function HomePage() {
         <article className="mt-20 md:mt-28">
           <Photo src={boardroom} alt="Yegara Space boardroom with long table and leather chairs" className="aspect-[4/3] md:aspect-[21/9]" pos="object-[50%_55%]" />
           <div className="mt-6 grid gap-4 border-t border-ink/25 pt-5 md:grid-cols-12 md:gap-8">
-            <span className="eyebrow text-orange md:col-span-1">07</span>
+            <span className="eyebrow text-orange md:col-span-1">06</span>
             <h3 className="text-4xl font-bold uppercase md:col-span-7 md:text-5xl lg:text-7xl"><Link to="/spaces/$slug" params={{ slug: "boardroom" }} className="transition-colors hover:text-orange">Boardroom</Link></h3>
             <p className="text-lg text-muted-foreground md:col-span-4 md:pt-3">For the moments that matter most.</p>
           </div>
@@ -233,7 +236,7 @@ function HomePage() {
     <section className="bg-cream py-24 md:py-36">
       <div className="section-shell grid items-center gap-12 md:grid-cols-2">
         <div className="reveal md:pr-10">
-          <p className="eyebrow mb-8"><span className="text-orange">08</span> · In-house Café</p>
+          <p className="eyebrow mb-8"><span className="text-orange">07</span> · In-house Café</p>
           <h2 className="text-5xl font-bold uppercase leading-[0.9] md:text-7xl">
             Great work runs on <span className="text-orange">great coffee.</span>
           </h2>
